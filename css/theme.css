@@ -1,8 +1,9 @@
 :root {
   --bg-main: #fff;
-  --bg-panel: #f0f0f0;
-  --bg-panel-trans: 240, 240, 240;
+  --bg-panel: #e7e7e7;
+  --bg-panel-trans: 200, 200, 200;
   --bg-map: #0f0f0f;
+  --border-radius: 5px;
 
   --border: #8a8a8a;
 
