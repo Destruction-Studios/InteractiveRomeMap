@@ -1,0 +1,17 @@
+:root {
+  --bg-main: #fff;
+  --bg-panel: #f0f0f0;
+  --bg-panel-trans: 240, 240, 240;
+  --bg-map: #0f0f0f;
+
+  --border: #8a8a8a;
+
+  --text-main: #000000;
+  --text-muted: #414141;
+
+  --accent: #4f8cff;
+  --accent-hover: #6fa0ff;
+
+  --map-region: #1a1a1a;
+  --map-region-hover: #2a2a2a;
+}

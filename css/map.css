@@ -1,0 +1,23 @@
+#map-window {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+}
+
+#map {
+  width: 100%;
+  height: 100%;
+  cursor: grab;
+}
+
+#map:active {
+  cursor: grabbing;
+}
+
+#map rect,
+#map circle {
+  fill: #1a1a1a;
+  stroke: #444;
+  stroke-width: 2;
+  transition: fill 0.15s ease;
+}
