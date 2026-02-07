@@ -1,5 +1,5 @@
 const svg = document.getElementById("map");
-const content = document.getElementById("map-g");
+const content = document.getElementById("map-contents");
 const tooltip = document.getElementById("tooltip");
 
 const LERP = 0.15;
@@ -121,11 +121,11 @@ function afterMapLoaded() {
 }
 
 function loadMap() {
-  fetch("assets/map.txt")
+  fetch("src/assets/map.txt")
     .then((r) => r.text())
-    .then((data) => {
-      // console.log(data);
-      content.innerHTML = data;
+    .then((r) => {
+      // console.log(r);
+      content.innerHTML = r;
     })
     .finally(afterMapLoaded);
 }
