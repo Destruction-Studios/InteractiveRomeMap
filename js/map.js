@@ -1,7 +1,6 @@
 const svg = document.getElementById("map");
 const content = document.getElementById("map-g");
 const tooltip = document.getElementById("tooltip");
-const mapSelection = document.querySelectorAll("#map-i a");
 
 const LERP = 0.15;
 
@@ -73,21 +72,6 @@ svg.addEventListener(
   { passive: false },
 );
 
-mapSelection.forEach((item) => {
-  const loc = (currentHover = item.dataset.location);
-  item.addEventListener("mouseenter", (e) => {
-    currentHover = loc;
-    tCurrentX = e.clientX + 12;
-    tCurrentY = e.clientY + 12;
-  });
-
-  item.addEventListener("mouseleave", (e) => {
-    if (currentHover == loc) {
-      currentHover = null;
-    }
-  });
-});
-
 document.addEventListener("mousemove", (e) => {
   if (currentHover == null) {
     tooltip.style.display = "none";
@@ -117,4 +101,34 @@ function animateMap() {
   requestAnimationFrame(animateMap);
 }
 
+function afterMapLoaded() {
+  const mapSelection = document.querySelectorAll("#map-i a");
+
+  mapSelection.forEach((item) => {
+    const loc = (currentHover = item.dataset.location);
+    item.addEventListener("mouseenter", (e) => {
+      currentHover = loc;
+      tCurrentX = e.clientX + 12;
+      tCurrentY = e.clientY + 12;
+    });
+
+    item.addEventListener("mouseleave", (e) => {
+      if (currentHover == loc) {
+        currentHover = null;
+      }
+    });
+  });
+}
+
+function loadMap() {
+  fetch("assets/map.txt")
+    .then((r) => r.text())
+    .then((data) => {
+      // console.log(data);
+      content.innerHTML = data;
+    })
+    .finally(afterMapLoaded);
+}
+
+loadMap();
 animateMap();
