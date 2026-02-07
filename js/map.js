@@ -1,5 +1,7 @@
 const svg = document.getElementById("map");
 const content = document.getElementById("map-g");
+const tooltip = document.getElementById("tooltip");
+const mapSelection = document.querySelectorAll("#map-i a");
 
 const LERP = 0.15;
 
@@ -20,6 +22,13 @@ let targetZoom = 1;
 const MIN_ZOOM = 0.8;
 const MAX_ZOOM = 5.5;
 const ZOOM_SPEED = 0.001;
+
+//Tooltip
+let currentHover = null;
+let tCurrentX = 0;
+let tCurrentY = 0;
+let tTargetX = 0;
+let tTargetY = 0;
 
 const lerp = (a, b, t) => a + (b - a) * t;
 
@@ -64,9 +73,40 @@ svg.addEventListener(
   { passive: false },
 );
 
+mapSelection.forEach((item) => {
+  const loc = (currentHover = item.dataset.location);
+  item.addEventListener("mouseenter", (e) => {
+    currentHover = loc;
+    tCurrentX = e.clientX + 12;
+    tCurrentY = e.clientY + 25;
+  });
+
+  item.addEventListener("mouseleave", (e) => {
+    if (currentHover == loc) {
+      currentHover = null;
+    }
+  });
+});
+
+document.addEventListener("mousemove", (e) => {
+  if (currentHover == null) {
+    tooltip.style.display = "none";
+  } else {
+    tTargetY = e.clientY - 24;
+    tTargetX = e.clientX + 12;
+
+    tooltip.style.display = "";
+    tooltip.innerHTML = currentHover;
+    tooltip.style.left = `${tCurrentX}px`;
+    tooltip.style.top = `${tCurrentY}px`;
+  }
+});
+
 function animateMap() {
   currentX = lerp(currentX, targetX, LERP);
   currentY = lerp(currentY, targetY, LERP);
+  tCurrentX = lerp(tCurrentX, tTargetX, LERP);
+  tCurrentY = lerp(tCurrentY, tTargetY, LERP);
   currentZoom = lerp(currentZoom, targetZoom, LERP);
 
   content.setAttribute(

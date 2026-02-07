@@ -1,4 +1,6 @@
 #map-window {
+  background: transparent;
+  background-color: #fbfbfb;
   position: relative;
   width: 100vw;
   height: 100vh;
@@ -12,4 +14,14 @@
 
 #map:active {
   cursor: grabbing;
+}
+
+#map-i {
+  z-index: 999;
+  position: relative;
+  scale: 0.7;
+}
+
+#map-i polygon {
+  fill: transparent;
 }
