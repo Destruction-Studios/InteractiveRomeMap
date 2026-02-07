@@ -50,3 +50,21 @@
   padding: 16px;
   overflow-y: auto;
 }
+
+.a-button {
+  text-decoration: none;
+}
+
+#sidebar button {
+  text-decoration: none;
+  display: block;
+  margin: 0 auto 10px auto;
+  padding: 4px 32px;
+  border: 1px solid var(--border);
+  border-radius: var(--border-radius);
+  transition: all 0.2s ease;
+}
+
+#sidebar button:hover {
+  transform: translateY(-3px);
+}

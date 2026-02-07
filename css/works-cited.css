@@ -1,0 +1,36 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+}
+
+#main {
+  width: min(70vw, 900px);
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+h2 {
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 1rem;
+  text-align: center;
+}
+
+.citation {
+  font-size: 16px;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.works-cited li {
+  text-indent: -2rem;
+  margin-bottom: 1rem;
+  line-height: 1.6;
+  text-align: left;
+}
