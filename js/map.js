@@ -78,7 +78,7 @@ mapSelection.forEach((item) => {
   item.addEventListener("mouseenter", (e) => {
     currentHover = loc;
     tCurrentX = e.clientX + 12;
-    tCurrentY = e.clientY + 25;
+    tCurrentY = e.clientY + 12;
   });
 
   item.addEventListener("mouseleave", (e) => {
