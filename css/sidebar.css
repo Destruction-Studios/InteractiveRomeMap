@@ -4,7 +4,7 @@
   left: 12px;
   bottom: 12px;
   width: 320px;
-  background: rgba(var(--bg-panel-trans), 0.9);
+  background: rgba(235, 235, 235, 0.6); /*var(--bg-panel); */
   backdrop-filter: blur(6px);
   border: 1px solid var(--border);
   border-radius: var(--border-radius);
@@ -28,6 +28,7 @@
 
 #sidebar p {
   user-select: none;
+  /* overflow-x: scroll; */
   background-color: var(--bg-panel);
   border: 1px solid var(--border);
   border-radius: var(--border-radius);
