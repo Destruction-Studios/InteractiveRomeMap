@@ -99,7 +99,7 @@ function afterMapLoaded() {
 }
 
 function loadMap() {
-  fetch("src/assets/map.txt")
+  fetch("/map.txt")
     .then((r) => r.text())
     .then((r) => {
       // console.log(r);
