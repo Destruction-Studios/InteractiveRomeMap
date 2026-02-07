@@ -51,6 +51,19 @@ body {
   color: rgb(52, 123, 255);
 }
 
+#tooltip {
+  position: absolute;
+  /* right: 50%; */
+  /* bottom: 50%; */
+  padding: 2px 8px;
+  background: rgba(230, 230, 230, 0.5);
+  backdrop-filter: blur(6px);
+  border: 1px solid var(--border);
+  color: var(--text-main);
+  border-radius: var(--border-radius);
+  pointer-events: none;
+}
+
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
