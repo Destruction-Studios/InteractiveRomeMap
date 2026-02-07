@@ -15,11 +15,19 @@
 
 #sidebar h1 {
   padding: 16px;
+  user-select: none;
   font-size: 1.5rem;
   border-bottom: 1px solid var(--border);
 }
 
+#sidebar h2 {
+  user-select: none;
+  padding: 16px 16px 16px 4px;
+  font-size: 1.2rem;
+}
+
 #sidebar p {
+  user-select: none;
   background-color: var(--bg-panel);
   border: 1px solid var(--border);
   border-radius: var(--border-radius);
@@ -29,20 +37,15 @@
 #sidebar-resizer {
   position: absolute;
   top: 0;
-  right: -4px;
-  width: 8px;
+  right: -12px;
+  width: 12px;
   height: 100%;
   cursor: ew-resize;
-  background: red;
+  background: transparent;
 }
 
 #sidebar .sidebar-content {
   flex: 1;
   padding: 16px;
   overflow-y: auto;
-}
-
-.sidebar-content h2 {
-  padding: 16px 16px 16px 4px;
-  font-size: 1.2rem;
 }
