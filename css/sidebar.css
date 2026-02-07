@@ -4,7 +4,7 @@
   left: 12px;
   bottom: 12px;
   width: 320px;
-  background: rgba(235, 235, 235, 0.6); /*var(--bg-panel); */
+  background: rgba(235, 235, 235, 0.35); /*var(--bg-panel); */
   backdrop-filter: blur(6px);
   border: 1px solid var(--border);
   border-radius: var(--border-radius);

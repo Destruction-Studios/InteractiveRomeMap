@@ -13,11 +13,3 @@
 #map:active {
   cursor: grabbing;
 }
-
-#map rect,
-#map circle {
-  fill: #1a1a1a;
-  stroke: #444;
-  stroke-width: 2;
-  transition: fill 0.15s ease;
-}

@@ -16,6 +16,41 @@ body {
   width: 100vh;
 }
 
+#links {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 10;
+  user-select: none;
+}
+
+#links ul {
+  display: flex;
+  flex-direction: row;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+#links li {
+  display: inline-block;
+  margin: 0;
+  padding: 4px 4px;
+  background: transparent;
+
+  color: rgba(0, 0, 0, 0.4);
+}
+
+#links .linkable-text {
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+#links .linkable-text:hover {
+  transform: translateY(-2px);
+  color: rgb(52, 123, 255);
+}
+
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;

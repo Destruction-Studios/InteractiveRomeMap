@@ -46,19 +46,18 @@ svg.addEventListener(
   (e) => {
     e.preventDefault();
 
-    const rect = svg.getBoundingClientRect();
-
     const zoom = Math.exp(-e.deltaY * ZOOM_SPEED);
     const newZoom = Math.min(MAX_ZOOM, Math.max(MIN_ZOOM, targetZoom * zoom));
 
-    const zoomingIn = newZoom > targetZoom;
+    const pt = svg.createSVGPoint();
 
-    const anchorX = zoomingIn ? e.clientX - rect.left : rect.width / 2;
+    pt.x = e.clientX;
+    pt.y = e.clientY;
 
-    const anchorY = zoomingIn ? e.clientY - rect.top : rect.height / 2;
+    const svgPoint = pt.matrixTransform(svg.getScreenCTM().inverse());
 
-    targetX = anchorX - (anchorX - targetX) * (newZoom / targetZoom);
-    targetY = anchorY - (anchorY - targetY) * (newZoom / targetZoom);
+    targetX = svgPoint.x - (svgPoint.x - targetX) * (newZoom / targetZoom);
+    targetY = svgPoint.y - (svgPoint.y - targetY) * (newZoom / targetZoom);
 
     targetZoom = newZoom;
   },
