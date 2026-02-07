@@ -1,4 +1,5 @@
 #map-window {
+  background: transparent;
   background-color: #fbfbfb;
   position: relative;
   width: 100vw;
@@ -16,5 +17,11 @@
 }
 
 #map-i {
-  border: 2px solid red;
+  z-index: 999;
+  position: relative;
+  scale: 0.7;
+}
+
+#map-i polygon {
+  fill: transparent;
 }

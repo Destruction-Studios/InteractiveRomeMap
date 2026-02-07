@@ -1,6 +1,5 @@
 const svg = document.getElementById("map");
 const content = document.getElementById("map-g");
-const mapInteract = document.getElementById("map-i");
 
 const LERP = 0.15;
 
@@ -71,11 +70,6 @@ function animateMap() {
   currentZoom = lerp(currentZoom, targetZoom, LERP);
 
   content.setAttribute(
-    "transform",
-    `translate(${currentX}, ${currentY}) scale(${currentZoom})`,
-  );
-
-  mapInteract.setAttribute(
     "transform",
     `translate(${currentX}, ${currentY}) scale(${currentZoom})`,
   );
