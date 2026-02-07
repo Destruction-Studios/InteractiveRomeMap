@@ -1,4 +1,5 @@
 #map-window {
+  background-color: #fbfbfb;
   position: relative;
   width: 100vw;
   height: 100vh;
@@ -12,4 +13,8 @@
 
 #map:active {
   cursor: grabbing;
+}
+
+#map-i {
+  border: 2px solid red;
 }
