@@ -22,6 +22,7 @@
 
 #sidebar h2 {
   user-select: none;
+  border: none;
   padding: 16px 16px 16px 4px;
   font-size: 1.2rem;
 }

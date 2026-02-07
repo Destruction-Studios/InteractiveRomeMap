@@ -3,13 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Rome Map</title>
-    <link rel="icon" href="assets/icon.png" type="image/png" />
-    <link rel="stylesheet" href="css/main.css" />
-    <link rel="stylesheet" href="css/sidebar.css" />
-    <link rel="stylesheet" href="css/map.css" />
-    <link rel="stylesheet" href="css/theme.css" />
-    <link rel="stylesheet" href="css/misc.css" />
+    <title>Interactive Rome Map</title>
+    <link rel="icon" href="src/assets/icon.png" type="image/png" />
   </head>
   <body>
     <div id="map-window">
@@ -23,7 +18,7 @@
         viewBox="0, 0, 400,459.72222222222223"
         version="1.1"
       >
-        <g id="map-g"></g>
+        <g id="map-contents"></g>
       </svg>
     </div>
     <!-- Sidebar -->
@@ -66,9 +61,7 @@
         </li>
       </ul>
     </div>
-    <div id="tooltip">Goon</div>
+    <div id="tooltip"></div>
   </body>
-  <script src="js/sidebar_resizer.js"></script>
-  <script src="js/map.js"></script>
-  <script src="js/misc.js"></script>
+  <script type="module" src="/src/main.js"></script>
 </html>
