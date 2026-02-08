@@ -14,6 +14,9 @@ let isShowingButton = true;
 let isResizing = false;
 let sidebarTabs = {};
 
+//Home
+const allPages = [];
+
 resizer.addEventListener("mousedown", () => {
   isResizing = true;
   document.body.style.cursor = "ew-resize";
@@ -53,6 +56,11 @@ function loadTabs() {
           header: entry.header,
           contents: html,
         };
+
+        allPages.push({
+          name: entry.header,
+          hash: key,
+        });
       }
     });
 }
@@ -86,13 +94,34 @@ function setTab(tab) {
 
   let data = sidebarTabs[tab];
   if (data == null) {
-    data = sidebarTabs["error"];
+    data = sidebarTabs["_error"];
   }
 
   currentTab = tab;
 
   sidebarHeader.innerText = data.header;
   sidebarContent.innerHTML = data.contents;
+
+  if (tab === "home") {
+    const locList = document.getElementById("location-list");
+
+    allPages.forEach((page) => {
+      if (page.hash[0] === "_" || page.hash === "home") {
+        return;
+      }
+
+      const li = document.createElement("li");
+      const a = document.createElement("a");
+
+      a.textContent = page.name;
+      a.href = `#${page.hash}`;
+
+      a.classList.add("no-underline");
+
+      li.append(a);
+      locList.append(li);
+    });
+  }
 }
 
 function animateStuff() {

@@ -89,7 +89,6 @@ svg.addEventListener("touchstart", (e) => {
   console.log(e.touches);
   if (e.touches.length === 1) {
     isDragging = true;
-    console.log("TOUCH DRAG");
     startX = e.touches[0].clientX - currentX;
     startY = e.touches[0].clientY - currentY;
   } else if (e.touches.length === 2) {
@@ -106,7 +105,6 @@ svg.addEventListener(
     e.preventDefault();
 
     if (e.touches.length === 1 && isDragging) {
-      console.log("TOUCH DRAG MOVE THING");
       targetX = e.touches[0].clientX - startX;
       targetY = e.touches[0].clientY - startY;
     } else if (e.touches.length === 2) {
@@ -224,9 +222,13 @@ function handlePinZoom() {
     if (pin.zoom != null)
       targetZoom >= pin.zoom
         ? !pin.visible &&
-          ((pin.element.style.opacity = "1"), (pin.visible = true))
+          ((pin.element.style.opacity = "1"),
+          (pin.visible = true),
+          (pin.element.style.pointerEvents = ""))
         : pin.visible &&
-          ((pin.element.style.opacity = "0"), (pin.visible = false));
+          ((pin.element.style.opacity = "0"),
+          (pin.visible = false),
+          (pin.element.style.pointerEvents = "none"));
   }
 }
 
