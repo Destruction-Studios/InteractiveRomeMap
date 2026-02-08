@@ -25,3 +25,11 @@
 #map-i polygon {
   fill: transparent;
 }
+
+.map-pin-outer {
+  fill: #ff0000;
+}
+
+.map-pin-inner {
+  fill: #fff;
+}

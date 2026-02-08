@@ -33,10 +33,12 @@ let tCurrentY = 0;
 let tTargetX = 0;
 let tTargetY = 0;
 
+//Pins
+const PIN_SCALE = 0.25;
+
 const lerp = (a, b, t) => a + (b - a) * t;
 
 svg.addEventListener("mousedown", (e) => {
-  console.log("Start drag map");
   isDragging = true;
   startX = e.clientX - currentX;
   startY = e.clientY - currentY;
@@ -99,13 +101,45 @@ function afterMapLoaded() {
 }
 
 function loadMap() {
-  return fetch("/map.txt")
+  return fetch("/assets/map.txt")
     .then((r) => r.text())
     .then((r) => {
       // console.log(r);
       content.innerHTML = r;
     })
     .finally(afterMapLoaded);
+}
+
+function loadMapLocations() {
+  return fetch("/map_pins.json")
+    .then((r) => r.json())
+    .then((mapPins) => {
+      const viewBox = svg.viewBox.baseVal;
+      const vbWidth = viewBox.width;
+      const vbHeight = viewBox.height;
+
+      for (const [name, loc] of Object.entries(mapPins)) {
+        const x = (loc.x / 100) * vbWidth;
+        const y = (loc.y / 100) * vbHeight;
+
+        const pin = document.createElementNS(
+          "http://www.w3.org/2000/svg",
+          "use",
+        );
+        const pinWidth = 24 * PIN_SCALE;
+        const pinHeight = 32 * PIN_SCALE;
+
+        pin.setAttribute("href", "#map-pin");
+
+        pin.setAttribute("x", x - pinWidth / 2); // center tip
+        pin.setAttribute("y", y - pinHeight); // tip sits on point
+        pin.setAttribute("width", pinWidth);
+        pin.setAttribute("height", pinHeight);
+
+        pin.classList.add("map-pin");
+        content.append(pin);
+      }
+    });
 }
 
 function animateStuff() {
@@ -141,6 +175,24 @@ function animateStuff() {
   requestAnimationFrame(animateStuff);
 }
 
-export const mapReady = loadMap().then(() => {
-  animateStuff();
-});
+if (location.hostname === "localhost") {
+  svg.addEventListener("click", (e) => {
+    const pt = svg.createSVGPoint();
+    pt.x = e.clientX;
+    pt.y = e.clientY;
+
+    const svgPoint = pt.matrixTransform(content.getCTM().inverse());
+
+    const viewBox = svg.viewBox.baseVal;
+
+    const percentX = (svgPoint.x / viewBox.width) * 100;
+    const percentY = (svgPoint.y / viewBox.height) * 100;
+
+    console.log(`"x": ${percentX.toFixed(2)}, "y": ${percentY.toFixed(2)}`);
+  });
+}
+
+export const mapReady = loadMap()
+  // .then(loadPinSymbol)
+  .then(loadMapLocations)
+  .finally(animateStuff);

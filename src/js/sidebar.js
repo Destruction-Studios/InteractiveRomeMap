@@ -2,6 +2,7 @@ const sidebar = document.getElementById("sidebar");
 const resizer = document.getElementById("sidebar-resizer");
 const sidebarHeader = document.getElementById("sidebar-header");
 const sidebarContent = document.getElementById("sidebar-content");
+const sidebarBackButton = document.getElementById("sidebar-back");
 
 const DEFAULT_TAB = "home";
 
@@ -9,7 +10,7 @@ const MIN_SIZE = 175;
 const MAX_SIZE = 500;
 
 let currentTab = "home";
-
+let isShowingButton = true;
 let isResizing = false;
 let sidebarTabs = {};
 
@@ -90,8 +91,30 @@ function setTab(tab) {
     data = sidebarTabs["error"];
   }
 
+  currentTab = tab;
+
   sidebarHeader.innerText = data.header;
   sidebarContent.innerHTML = data.contents;
+}
+
+function animateStuff() {
+  let showBack = true;
+
+  if (currentTab === DEFAULT_TAB) {
+    showBack = false;
+  }
+
+  // if (sidebarContent.scrollTop > 10) {
+  //   showBack = false;
+  // }
+
+  if (showBack != isShowingButton) {
+    isShowingButton = showBack;
+    sidebarBackButton.style.opacity = showBack ? "1" : "0";
+    sidebarBackButton.style.pointerEvents = showBack ? "auto" : "none";
+  }
+
+  requestAnimationFrame(animateStuff);
 }
 
 export async function initSidebar() {
@@ -99,5 +122,11 @@ export async function initSidebar() {
   setupMapLocations();
   onPageHashChange();
 
+  sidebarBackButton.addEventListener("mousedown", () => {
+    window.location.hash = DEFAULT_TAB;
+  });
+
   window.addEventListener("hashchange", onPageHashChange);
+
+  animateStuff();
 }
