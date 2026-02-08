@@ -232,6 +232,17 @@ function handlePinZoom() {
   }
 }
 
+function setupMapLocations() {
+  const mapLocations = document.querySelectorAll(".map-location");
+
+  mapLocations.forEach((mapLoc) => {
+    const location = mapLoc.dataset.location;
+    mapLoc.addEventListener("mousedown", () => {
+      window.location.hash = `${location.toLowerCase()}`;
+    });
+  });
+}
+
 function animateStuff() {
   currentX = lerp(currentX, targetX, LERP);
   currentY = lerp(currentY, targetY, LERP);
@@ -288,4 +299,5 @@ export const mapReady = loadMap()
   // .then(loadPinSymbol)
   .then(loadMapLocations)
   .then(loadTooltips)
+  .then(setupMapLocations)
   .finally(animateStuff);
