@@ -1,3 +1,7 @@
 .underline-text {
   text-decoration: underline;
 }
+
+.no-underline {
+  text-decoration: none;
+}

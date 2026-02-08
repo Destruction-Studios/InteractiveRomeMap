@@ -5,6 +5,12 @@ import "./css/sidebar.css";
 import "./css/theme.css";
 import "./css/works-cited.css";
 
-import "./js/map.js";
+import { mapReady } from "./js/map.js";
+import { initSidebar } from "./js/sidebar.js";
 import "./js/misc.js";
-import "./js/sidebar_resizer.js";
+
+console.log("Awaiting map...");
+await mapReady;
+console.log("Map ready!");
+await initSidebar();
+console.log("Sidebar loaded");

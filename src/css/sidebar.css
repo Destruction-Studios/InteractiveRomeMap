@@ -34,6 +34,7 @@
   border: 1px solid var(--border);
   border-radius: var(--border-radius);
   padding: 10px;
+  margin-bottom: 15px;
 }
 
 #sidebar-resizer {
@@ -46,14 +47,10 @@
   background: transparent;
 }
 
-#sidebar .sidebar-content {
+#sidebar #sidebar-content {
   flex: 1;
   padding: 16px;
   overflow-y: auto;
-}
-
-.a-button {
-  text-decoration: none;
 }
 
 #sidebar button {
