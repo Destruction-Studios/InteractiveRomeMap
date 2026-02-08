@@ -1,7 +1,13 @@
 {
-    "Rome": {
+    "rome": {
+        "tooltip": "Rome / Tiber River",
         "x": 45.80,
         "y": 47.3,
+        "zoom": 1.8
+    },
+    "goonville": {
+        "tooltip": "Goonville",
+        "x": 17.00, "y": 63.49,
         "zoom": 2
     }
 }

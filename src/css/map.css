@@ -26,6 +26,11 @@
   fill: transparent;
 }
 
+.map-pin {
+  transition: all 0.4s ease;
+  opacity: 0;
+}
+
 .map-pin-outer {
   fill: #ff0000;
 }

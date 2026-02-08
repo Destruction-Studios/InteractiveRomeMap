@@ -27,6 +27,7 @@ const ZOOM_SPEED = 0.001;
 
 //Tooltip
 let currentHover = null;
+let currentTooltipText = null;
 let lastHovered = 0;
 let tCurrentX = 0;
 let tCurrentY = 0;
@@ -35,6 +36,7 @@ let tTargetY = 0;
 
 //Pins
 const PIN_SCALE = 0.25;
+let allMapPins = [];
 
 const lerp = (a, b, t) => a + (b - a) * t;
 
@@ -81,13 +83,15 @@ svg.addEventListener(
   { passive: false },
 );
 
-function afterMapLoaded() {
-  const mapSelection = document.querySelectorAll("#map-i a");
+function loadTooltips() {
+  const mapSelection = document.querySelectorAll(".map-tooltip");
 
   mapSelection.forEach((item) => {
-    const loc = (currentHover = item.dataset.location);
+    const loc = item.dataset.location;
+    const tooltip = item.dataset.tooltip || loc;
     item.addEventListener("mouseenter", (e) => {
       currentHover = loc;
+      currentTooltipText = tooltip;
       tCurrentX = e.clientX + 12;
       tCurrentY = e.clientY + 12;
     });
@@ -106,8 +110,7 @@ function loadMap() {
     .then((r) => {
       // console.log(r);
       content.innerHTML = r;
-    })
-    .finally(afterMapLoaded);
+    });
 }
 
 function loadMapLocations() {
@@ -131,15 +134,37 @@ function loadMapLocations() {
 
         pin.setAttribute("href", "#map-pin");
 
-        pin.setAttribute("x", x - pinWidth / 2); // center tip
-        pin.setAttribute("y", y - pinHeight); // tip sits on point
+        pin.setAttribute("x", x - pinWidth / 2);
+        pin.setAttribute("y", y - pinHeight);
         pin.setAttribute("width", pinWidth);
         pin.setAttribute("height", pinHeight);
 
+        pin.dataset.location = name;
+        pin.dataset.tooltip = loc.tooltip || "no tooltip";
         pin.classList.add("map-pin");
+        pin.classList.add("map-location");
+        pin.classList.add("map-tooltip");
         content.append(pin);
+
+        allMapPins.push({
+          element: pin,
+          zoom: loc.zoom,
+          visible: true,
+        });
       }
     });
+}
+
+function handlePinZoom() {
+  // console.log(currentZoom);
+  for (const pin of allMapPins) {
+    if (pin.zoom != null)
+      targetZoom >= pin.zoom
+        ? !pin.visible &&
+          ((pin.element.style.opacity = "1"), (pin.visible = true))
+        : pin.visible &&
+          ((pin.element.style.opacity = "0"), (pin.visible = false));
+  }
 }
 
 function animateStuff() {
@@ -167,10 +192,12 @@ function animateStuff() {
     lastHovered = now;
 
     tooltip.style.display = "";
-    tooltip.innerHTML = currentHover;
+    tooltip.innerText = currentTooltipText;
     tooltip.style.left = `${tCurrentX}px`;
     tooltip.style.top = `${tCurrentY}px`;
   }
+
+  handlePinZoom();
 
   requestAnimationFrame(animateStuff);
 }
@@ -195,4 +222,5 @@ if (location.hostname === "localhost") {
 export const mapReady = loadMap()
   // .then(loadPinSymbol)
   .then(loadMapLocations)
+  .then(loadTooltips)
   .finally(animateStuff);
