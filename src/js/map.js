@@ -24,6 +24,8 @@ let targetZoom = 1;
 const MIN_ZOOM = 0.8;
 const MAX_ZOOM = 5.5;
 const ZOOM_SPEED = 0.001;
+//Zooming->Touch
+let lastTouchDistance = 0;
 
 //Tooltip
 let currentHover = null;
@@ -82,6 +84,67 @@ svg.addEventListener(
   },
   { passive: false },
 );
+
+svg.addEventListener("touchstart", (e) => {
+  console.log(e.touches);
+  if (e.touches.length === 1) {
+    isDragging = true;
+    console.log("TOUCH DRAG");
+    startX = e.touches[0].clientX - currentX;
+    startY = e.touches[0].clientY - currentY;
+  } else if (e.touches.length === 2) {
+    lastTouchDistance = Math.hypot(
+      e.touches[0].clientX - e.touches[1].clientX,
+      e.touches[0].clientY - e.touches[1].clientY,
+    );
+  }
+});
+
+svg.addEventListener(
+  "touchmove",
+  (e) => {
+    e.preventDefault();
+
+    if (e.touches.length === 1 && isDragging) {
+      console.log("TOUCH DRAG MOVE THING");
+      targetX = e.touches[0].clientX - startX;
+      targetY = e.touches[0].clientY - startY;
+    } else if (e.touches.length === 2) {
+      const dx = e.touches[0].clientX - e.touches[1].clientX;
+      const dy = e.touches[0].clientY - e.touches[1].clientY;
+      const distance = Math.hypot(dx, dy);
+
+      const zoom = distance / lastTouchDistance;
+      const newZoom = Math.min(MAX_ZOOM, Math.max(MIN_ZOOM, targetZoom * zoom));
+
+      const midX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
+      const midY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
+
+      const pt = svg.createSVGPoint();
+      pt.x = midX;
+      pt.y = midY;
+      const svgPoint = pt.matrixTransform(svg.getScreenCTM().inverse());
+
+      targetX = svgPoint.x - (svgPoint.x - targetX) * (newZoom / targetZoom);
+      targetY = svgPoint.y - (svgPoint.y - targetY) * (newZoom / targetZoom);
+
+      targetZoom = newZoom;
+      lastTouchDistance = distance;
+    }
+  },
+  { passive: false },
+);
+
+svg.addEventListener("touchend", (e) => {
+  if (e.touches.length === 1) {
+    isDragging = false;
+  } else if (e.touches.length === 2) {
+    // if one finger remains, switch to drag
+    startX = e.touches[0].clientX - currentX;
+    startY = e.touches[0].clientY - currentY;
+    isDragging = true;
+  }
+});
 
 function loadTooltips() {
   const mapSelection = document.querySelectorAll(".map-tooltip");

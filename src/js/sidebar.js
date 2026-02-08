@@ -73,8 +73,6 @@ function onPageHashChange() {
 function setupMapLocations() {
   const mapLocations = document.querySelectorAll(".map-location");
 
-  console.log(mapLocations);
-
   mapLocations.forEach((mapLoc) => {
     const location = mapLoc.dataset.location;
     mapLoc.addEventListener("mousedown", () => {
