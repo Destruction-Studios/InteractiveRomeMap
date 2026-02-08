@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Interactive Rome Map</title>
-    <link rel="icon" href="/icon.png" type="image/png" />
+    <link rel="icon" href="/assets/icon.png" type="image/png" />
   </head>
   <body>
     <div id="map-window">
@@ -18,6 +18,21 @@
         viewBox="0, 0, 400,459.72222222222223"
         version="1.1"
       >
+        <defs>
+          <symbol id="map-pin" viewBox="0 0 24 32">
+            <path
+              class="map-pin-outer"
+              fill="#fff"
+              d="M12,0C5.383,0,0,5.394,0,12.022c0,9.927,11.201,19.459,11.678,19.86C11.771,31.961,11.886,32,12,32
+      c0.113,0,0.226-0.038,0.318-0.114C12.795,31.492,24,22.124,24,12.022C24,5.394,18.617,0,12,0z"
+            />
+            <path
+              class="map-pin-inner"
+              fill="#fff"
+              d="M12,6c-3.309,0-6,2.691-6,6s2.691,6,6,6s6-2.691,6-6S15.309,6,12,6z"
+            />
+          </symbol>
+        </defs>
         <g id="map-contents"></g>
       </svg>
     </div>
@@ -26,6 +41,7 @@
       <h1 id="sidebar-header">About</h1>
       <div id="sidebar-content"></div>
       <div id="sidebar-resizer"></div>
+      <button id="sidebar-back">Home</button>
     </aside>
     <div id="links">
       <ul>

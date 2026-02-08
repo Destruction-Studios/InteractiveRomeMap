@@ -66,3 +66,19 @@
 #sidebar button:hover {
   transform: translateY(-3px);
 }
+
+#sidebar button#sidebar-back {
+  position: absolute;
+  /* top: 75px; */
+  /* left: 10px; */
+  top: 8px;
+  right: 10px;
+  margin: 0;
+  z-index: 20;
+  padding: 16px 15px;
+  transition: all 0.15s ease;
+}
+
+#sidebar button#sidebar-back:hover {
+  transform: scaleX(5px);
+}
