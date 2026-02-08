@@ -23,6 +23,7 @@
 }
 
 #map-i polygon {
+  cursor: pointer;
   fill: transparent;
 }
 
