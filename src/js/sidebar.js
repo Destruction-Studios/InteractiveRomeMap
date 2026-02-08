@@ -14,6 +14,10 @@ let isShowingButton = true;
 let isResizing = false;
 let sidebarTabs = {};
 
+//Home
+const allPages = [];
+const allPins = [];
+
 resizer.addEventListener("mousedown", () => {
   isResizing = true;
   document.body.style.cursor = "ew-resize";
@@ -37,6 +41,21 @@ document.addEventListener("mouseup", () => {
   document.body.style.userSelect = "";
 });
 
+function loadPlaceList() {
+  return fetch("/map_pins.json")
+    .then((r) => r.json())
+    .then(async (r) => {
+      for (const key in r) {
+        const entry = r[key];
+
+        allPins.push({
+          name: entry.tooltip,
+          hash: key,
+        });
+      }
+    });
+}
+
 function loadTabs() {
   return fetch("/sidebar_profiles/tabs.json")
     .then((r) => r.json())
@@ -53,6 +72,11 @@ function loadTabs() {
           header: entry.header,
           contents: html,
         };
+
+        allPages.push({
+          name: entry.header,
+          hash: key,
+        });
       }
     });
 }
@@ -70,17 +94,18 @@ function onPageHashChange() {
   setTab(hash.toLowerCase());
 }
 
-function setupMapLocations() {
-  const mapLocations = document.querySelectorAll(".map-location");
+function createLocListItem(prop) {
+  const li = document.createElement("li");
+  const a = document.createElement("a");
 
-  console.log(mapLocations);
+  a.textContent = prop.name;
+  a.href = `#${prop.hash}`;
 
-  mapLocations.forEach((mapLoc) => {
-    const location = mapLoc.dataset.location;
-    mapLoc.addEventListener("mousedown", () => {
-      window.location.hash = `${location.toLowerCase()}`;
-    });
-  });
+  a.classList.add("no-underline");
+
+  li.append(a);
+
+  return li;
 }
 
 function setTab(tab) {
@@ -88,13 +113,29 @@ function setTab(tab) {
 
   let data = sidebarTabs[tab];
   if (data == null) {
-    data = sidebarTabs["error"];
+    data = sidebarTabs["_error"];
   }
 
   currentTab = tab;
 
   sidebarHeader.innerText = data.header;
   sidebarContent.innerHTML = data.contents;
+
+  if (tab === "home") {
+    const locList = document.getElementById("location-list");
+    const pinList = document.getElementById("place-list");
+
+    allPages.forEach((page) => {
+      if (page.hash[0] === "_" || page.hash === "home") {
+        return;
+      }
+
+      locList.append(createLocListItem(page));
+    });
+    allPins.forEach((pin) => {
+      pinList.append(createLocListItem(pin));
+    });
+  }
 }
 
 function animateStuff() {
@@ -119,7 +160,8 @@ function animateStuff() {
 
 export async function initSidebar() {
   await loadTabs();
-  setupMapLocations();
+  await loadPlaceList();
+  // setupMapLocations();
   onPageHashChange();
 
   sidebarBackButton.addEventListener("mousedown", () => {

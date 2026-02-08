@@ -82,3 +82,32 @@
 #sidebar button#sidebar-back:hover {
   transform: scaleX(5px);
 }
+
+.location-list {
+  text-align: center;
+  list-style-type: none;
+  list-style-position: inside;
+  padding: 0;
+  margin: 0;
+}
+
+.location-list a {
+  color: #1f87cc;
+  transition: all 0.2s ease;
+}
+
+.location-list a:hover {
+  color: #216ea1;
+  text-decoration: underline;
+}
+/* 
+.location-list a::before {
+  content: ">";
+  opacity: 0;
+  margin-right: 2px;
+  transition: opacity 0.2s ease;
+}
+
+.location-list a:hover::before {
+  opacity: 1;
+} */

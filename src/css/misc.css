@@ -5,3 +5,7 @@
 .no-underline {
   text-decoration: none;
 }
+
+hr {
+  margin: 8px 8px;
+}
