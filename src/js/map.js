@@ -99,7 +99,7 @@ function afterMapLoaded() {
 }
 
 function loadMap() {
-  fetch("/map.txt")
+  return fetch("/map.txt")
     .then((r) => r.text())
     .then((r) => {
       // console.log(r);
@@ -141,5 +141,6 @@ function animateStuff() {
   requestAnimationFrame(animateStuff);
 }
 
-loadMap();
-animateStuff();
+export const mapReady = loadMap().then(() => {
+  animateStuff();
+});
