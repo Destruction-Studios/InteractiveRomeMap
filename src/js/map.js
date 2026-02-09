@@ -205,6 +205,11 @@ function loadMapLocations() {
         pin.classList.add("map-pin");
         pin.classList.add("map-location");
         pin.classList.add("map-tooltip");
+
+        if (loc.color === "blue") {
+          pin.classList.add("pin-blue");
+        }
+
         content.append(pin);
 
         allMapPins.push({
