@@ -31,6 +31,9 @@
   cursor: pointer;
   opacity: 0;
   color: #ff0000;
+  transform-box: fill-box;
+  transform-origin: center bottom;
+  will-change: transform;
 
   transition:
     opacity 0.4s ease,

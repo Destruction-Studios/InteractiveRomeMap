@@ -37,8 +37,14 @@ let tTargetX = 0;
 let tTargetY = 0;
 
 //Pins
-const PIN_SCALE = 0.25;
+const PIN_SCALE = 0.23;
 let allMapPins = [];
+//Pins->Sway
+const SWAY_MAX = 12;
+const SWAY_STR = 1.7;
+const SWAY_LERP = 0.9;
+let lastX = 0;
+let velX = 0;
 
 const lerp = (a, b, t) => a + (b - a) * t;
 
@@ -186,6 +192,10 @@ function loadMapLocations() {
         const x = (loc.x / 100) * vbWidth;
         const y = (loc.y / 100) * vbHeight;
 
+        const group = document.createElementNS(
+          "http://www.w3.org/2000/svg",
+          "g",
+        );
         const pin = document.createElementNS(
           "http://www.w3.org/2000/svg",
           "use",
@@ -195,8 +205,11 @@ function loadMapLocations() {
 
         pin.setAttribute("href", "#map-pin");
 
-        pin.setAttribute("x", x - pinWidth / 2);
-        pin.setAttribute("y", y - pinHeight);
+        group.setAttribute("transform", `translate(${x}, ${y})`);
+
+        pin.setAttribute("x", -pinWidth / 2);
+        pin.setAttribute("y", -pinHeight);
+
         pin.setAttribute("width", pinWidth);
         pin.setAttribute("height", pinHeight);
 
@@ -210,7 +223,8 @@ function loadMapLocations() {
           pin.classList.add("pin-blue");
         }
 
-        content.append(pin);
+        group.append(pin);
+        content.append(group);
 
         allMapPins.push({
           element: pin,
@@ -260,6 +274,26 @@ function animateStuff() {
     `translate(${currentX}, ${currentY}) scale(${currentZoom})`,
   );
 
+  //pin sway
+  const dx = currentX - lastX;
+  // console.log(dx);
+  velX = lerp(velX, dx, SWAY_LERP);
+  const sway = Math.max(-SWAY_MAX, Math.min(SWAY_MAX, -velX * SWAY_STR));
+  // console.log(sway);
+  // console.log(velX);
+  for (const pin of allMapPins) {
+    const el = pin.element;
+
+    const current = el._sway || 0;
+    const next = lerp(current, sway, 0.15);
+
+    el._sway = next;
+    // if (el.visible) {
+    el.setAttribute("transform", `rotate(${next})`);
+    // }
+  }
+
+  //tooltips
   const now = performance.now();
 
   tTargetY = mouseY - 24;
@@ -279,6 +313,8 @@ function animateStuff() {
   }
 
   handlePinZoom();
+
+  lastX = currentX;
 
   requestAnimationFrame(animateStuff);
 }
