@@ -37,12 +37,13 @@ let tTargetX = 0;
 let tTargetY = 0;
 
 //Pins
+const PIVOT_RAISE = 6.7;
 const PIN_SCALE = 0.23;
 let allMapPins = [];
 //Pins->Sway
-const SWAY_MAX = 12;
-const SWAY_STR = 1.7;
-const SWAY_LERP = 0.9;
+const SWAY_MAX = 26;
+const SWAY_STR = 2;
+const SWAY_LERP = 0.6;
 let lastX = 0;
 let velX = 0;
 
@@ -205,10 +206,10 @@ function loadMapLocations() {
 
         pin.setAttribute("href", "#map-pin");
 
-        group.setAttribute("transform", `translate(${x}, ${y})`);
+        group.setAttribute("transform", `translate(${x}, ${y - PIVOT_RAISE})`);
 
         pin.setAttribute("x", -pinWidth / 2);
-        pin.setAttribute("y", -pinHeight);
+        pin.setAttribute("y", -pinHeight + PIVOT_RAISE);
 
         pin.setAttribute("width", pinWidth);
         pin.setAttribute("height", pinHeight);
