@@ -5,6 +5,12 @@
         "y": 47.3,
         "zoom": 1.8
     },
+    "antium": {
+        "tooltip":"Antium",
+        "x": 47.58, "y": 51,
+        "zoom": 1.8,
+        "color": "blue"
+    },
     "test": {
         "tooltip": "Test Test",
         "x": 17.00, "y": 63.49,
