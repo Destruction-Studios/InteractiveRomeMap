@@ -11,6 +11,7 @@ export default defineConfig({
       input: {
         main: resolve(__dirname, "src/index.html"),
         "works-cited": resolve(__dirname, "src/works-cited/index.html"),
+        maps: resolve(__dirname, "src/maps/index.html"),
       },
     },
   },

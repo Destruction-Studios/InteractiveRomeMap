@@ -33,9 +33,11 @@
 }
 
 .map-pin-outer {
+  cursor: pointer;
   fill: #ff0000;
 }
 
 .map-pin-inner {
+  cursor: pointer;
   fill: #fff;
 }

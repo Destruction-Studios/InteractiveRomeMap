@@ -22,7 +22,7 @@ let targetY = 0;
 let currentZoom = 1;
 let targetZoom = 1;
 const MIN_ZOOM = 0.8;
-const MAX_ZOOM = 5.5;
+const MAX_ZOOM = 7;
 const ZOOM_SPEED = 0.001;
 //Zooming->Touch
 let lastTouchDistance = 0;
