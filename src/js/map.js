@@ -20,7 +20,7 @@ let targetY = 0;
 
 //Zooming
 let currentZoom = 1;
-let targetZoom = 1;
+let targetZoom = 3;
 const MIN_ZOOM = 0.8;
 const MAX_ZOOM = 7;
 const ZOOM_SPEED = 0.001;
@@ -38,7 +38,7 @@ let tTargetY = 0;
 
 //Pins
 const PIVOT_RAISE = 6.7;
-const PIN_SCALE = 0.23;
+const PIN_SCALE = 0.1;
 let allMapPins = [];
 //Pins->Sway
 const SWAY_MAX = 26;
@@ -282,17 +282,17 @@ function animateStuff() {
   const sway = Math.max(-SWAY_MAX, Math.min(SWAY_MAX, -velX * SWAY_STR));
   // console.log(sway);
   // console.log(velX);
-  for (const pin of allMapPins) {
-    const el = pin.element;
+  // for (const pin of allMapPins) {
+  //   const el = pin.element;
 
-    const current = el._sway || 0;
-    const next = lerp(current, sway, 0.15);
+  //   const current = el._sway || 0;
+  //   const next = lerp(current, sway, 0.15);
 
-    el._sway = next;
-    // if (el.visible) {
-    el.setAttribute("transform", `rotate(${next})`);
-    // }
-  }
+  //   el._sway = next;
+  //   // if (el.visible) {
+  //   el.setAttribute("transform", `rotate(${next})`);
+  //   // }
+  // }
 
   //tooltips
   const now = performance.now();
