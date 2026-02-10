@@ -11,9 +11,9 @@
         "zoom": 1.8,
         "color": "blue"
     },
-    "test": {
-        "tooltip": "Test Test",
-        "x": 17.00, "y": 63.49,
+    "rome": {
+        "tooltip": "Rome",
+        "x": 43.79, "y": 14.01,
         "zoom": 2
     }
 }
