@@ -13,16 +13,16 @@ let isDragging = false;
 let startX = 0;
 let startY = 0;
 
-let currentX = 0;
-let currentY = 0;
-let targetX = 0;
-let targetY = 0;
+let currentX = -363;
+let currentY = -30;
+let targetX = -363;
+let targetY = -30;
 
 //Zooming
-let currentZoom = 1;
-let targetZoom = 3;
-const MIN_ZOOM = 0.8;
-const MAX_ZOOM = 7;
+let currentZoom = 2.8;
+let targetZoom = 2.8;
+const MIN_ZOOM = 2.8;
+const MAX_ZOOM = 7.5;
 const ZOOM_SPEED = 0.001;
 //Zooming->Touch
 let lastTouchDistance = 0;
@@ -179,6 +179,24 @@ function loadMap() {
       // console.log(r);
       content.innerHTML = r;
     });
+}
+
+function fitMapToScreen() {
+  const vb = svg.viewBox.baseVal;
+
+  const screenW = svg.clientWidth;
+  const screenH = svg.clientHeight;
+
+  const visibleW = screenW / currentZoom;
+  const visibleH = screenH / currentZoom;
+
+  currentX = targetX = (visibleW - vb.width) / 2;
+  currentY = targetY = (visibleH - vb.height) / 2;
+
+  content.setAttribute(
+    "transform",
+    `translate(${currentX}, ${currentY}) scale(${currentZoom})`,
+  );
 }
 
 function loadMapLocations() {
@@ -342,4 +360,5 @@ export const mapReady = loadMap()
   .then(loadMapLocations)
   .then(loadTooltips)
   .then(setupMapLocations)
+  // .then(fitMapToScreen)
   .finally(animateStuff);
