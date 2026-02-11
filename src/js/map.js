@@ -177,7 +177,7 @@ function loadTooltips() {
 }
 
 function loadMap() {
-  return fetch("/assets/map.txt")
+  return fetch("/assets/map_new.txt")
     .then((r) => r.text())
     .then((r) => {
       // console.log(r);
