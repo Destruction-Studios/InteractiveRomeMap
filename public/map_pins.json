@@ -1,7 +1,22 @@
 {   
-    "tiber_river": {
+    "tiber-river": {
         "tooltip": "Tiber River",
-        "x": 43.79, "y": 14.01,
-        "zoom": 3
+        "x": 43.79, "y": 14.01
+    },
+    "carthage": {
+        "tooltip": "Carthage",
+        "x": 39.86, "y": 25.78
+    },
+    "athens": {
+        "tooltip":"Athens",
+        "x": 66.07, "y": 22.09
+    },
+    "thebes": {
+        "tooltip": "Thebes",
+        "x": 64.96, "y": 21.84
+    },
+    "delphi": {
+        "tooltip": "Delphi",
+        "x": 63.29, "y": 21.36
     }
 }

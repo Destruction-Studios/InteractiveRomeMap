@@ -155,12 +155,19 @@ svg.addEventListener("touchend", (e) => {
   }
 });
 
+function formatLocation(slug) {
+  return slug
+    .split("-")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+}
+
 function loadTooltips() {
   const mapSelection = document.querySelectorAll(".map-tooltip");
 
   mapSelection.forEach((item) => {
     const loc = item.dataset.location;
-    const tooltip = item.dataset.tooltip || loc;
+    const tooltip = formatLocation(item.dataset.tooltip || loc);
     item.addEventListener("mouseenter", (e) => {
       currentHover = loc;
       currentTooltipText = tooltip;
@@ -233,7 +240,7 @@ function loadMapLocations() {
 
         allMapPins.push({
           element: pin,
-          zoom: loc.zoom,
+          zoom: loc.zoom || 3,
           visible: true,
         });
       }
