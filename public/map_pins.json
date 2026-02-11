@@ -1,19 +1,7 @@
-{
+{   
     "tiber_river": {
         "tooltip": "Tiber River",
-        "x": 45.80,
-        "y": 47.3,
-        "zoom": 1.8
-    },
-    "antium": {
-        "tooltip":"Antium",
-        "x": 47.58, "y": 51,
-        "zoom": 1.8,
-        "color": "blue"
-    },
-    "rome": {
-        "tooltip": "Rome",
         "x": 43.79, "y": 14.01,
-        "zoom": 2
+        "zoom": 3
     }
 }

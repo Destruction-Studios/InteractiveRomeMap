@@ -13,15 +13,19 @@ let isDragging = false;
 let startX = 0;
 let startY = 0;
 
-let currentX = -363;
-let currentY = -30;
-let targetX = -363;
-let targetY = -30;
+let currentX = 0;
+let currentY = 0;
+let targetX = 0;
+let targetY = 0;
+// let currentX = -363;
+// let currentY = -30;
+// let targetX = -363;
+// let targetY = -30;
 
 //Zooming
-let currentZoom = 2.8;
+let currentZoom = 1;
 let targetZoom = 2.8;
-const MIN_ZOOM = 2.8;
+const MIN_ZOOM = 2.6;
 const MAX_ZOOM = 7.5;
 const ZOOM_SPEED = 0.001;
 //Zooming->Touch
@@ -48,6 +52,7 @@ let lastX = 0;
 let velX = 0;
 
 const lerp = (a, b, t) => a + (b - a) * t;
+const clamp = (v, min, max) => Math.min(max, Math.max(min, v));
 
 svg.addEventListener("mousedown", (e) => {
   isDragging = true;
@@ -63,6 +68,7 @@ document.addEventListener("mousemove", (e) => {
 
   targetX = e.clientX - startX;
   targetY = e.clientY - startY;
+  clampPan();
 });
 
 document.addEventListener("mouseup", () => {
@@ -86,6 +92,7 @@ svg.addEventListener(
 
     targetX = svgPoint.x - (svgPoint.x - targetX) * (newZoom / targetZoom);
     targetY = svgPoint.y - (svgPoint.y - targetY) * (newZoom / targetZoom);
+    clampPan();
 
     targetZoom = newZoom;
   },
@@ -132,6 +139,7 @@ svg.addEventListener(
 
       targetX = svgPoint.x - (svgPoint.x - targetX) * (newZoom / targetZoom);
       targetY = svgPoint.y - (svgPoint.y - targetY) * (newZoom / targetZoom);
+      clampPan();
 
       targetZoom = newZoom;
       lastTouchDistance = distance;
@@ -150,6 +158,24 @@ svg.addEventListener("touchend", (e) => {
     isDragging = true;
   }
 });
+
+function clampPan() {
+  const bbox = content.getBBox();
+
+  const viewW = svg.viewBox.baseVal.width;
+  const viewH = svg.viewBox.baseVal.height;
+
+  const scaledW = bbox.width * targetZoom;
+  const scaledH = bbox.height * targetZoom;
+
+  const minX = viewW - scaledW;
+  const minY = viewH - scaledH;
+
+  console.log(viewW, scaledW, minX);
+
+  targetX = clamp(targetX, minX, 0);
+  targetY = clamp(targetY, minY, 0);
+}
 
 function loadTooltips() {
   const mapSelection = document.querySelectorAll(".map-tooltip");
@@ -179,24 +205,6 @@ function loadMap() {
       // console.log(r);
       content.innerHTML = r;
     });
-}
-
-function fitMapToScreen() {
-  const vb = svg.viewBox.baseVal;
-
-  const screenW = svg.clientWidth;
-  const screenH = svg.clientHeight;
-
-  const visibleW = screenW / currentZoom;
-  const visibleH = screenH / currentZoom;
-
-  currentX = targetX = (visibleW - vb.width) / 2;
-  currentY = targetY = (visibleH - vb.height) / 2;
-
-  content.setAttribute(
-    "transform",
-    `translate(${currentX}, ${currentY}) scale(${currentZoom})`,
-  );
 }
 
 function loadMapLocations() {
