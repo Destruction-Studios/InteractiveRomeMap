@@ -25,7 +25,7 @@ let targetY = 0;
 //Zooming
 let currentZoom = 1;
 let targetZoom = 2.8;
-const MIN_ZOOM = 2.6;
+const MIN_ZOOM = 2.2;
 const MAX_ZOOM = 7.5;
 const ZOOM_SPEED = 0.001;
 //Zooming->Touch
@@ -52,7 +52,6 @@ let lastX = 0;
 let velX = 0;
 
 const lerp = (a, b, t) => a + (b - a) * t;
-const clamp = (v, min, max) => Math.min(max, Math.max(min, v));
 
 svg.addEventListener("mousedown", (e) => {
   isDragging = true;
@@ -68,7 +67,6 @@ document.addEventListener("mousemove", (e) => {
 
   targetX = e.clientX - startX;
   targetY = e.clientY - startY;
-  clampPan();
 });
 
 document.addEventListener("mouseup", () => {
@@ -92,7 +90,6 @@ svg.addEventListener(
 
     targetX = svgPoint.x - (svgPoint.x - targetX) * (newZoom / targetZoom);
     targetY = svgPoint.y - (svgPoint.y - targetY) * (newZoom / targetZoom);
-    clampPan();
 
     targetZoom = newZoom;
   },
@@ -139,7 +136,6 @@ svg.addEventListener(
 
       targetX = svgPoint.x - (svgPoint.x - targetX) * (newZoom / targetZoom);
       targetY = svgPoint.y - (svgPoint.y - targetY) * (newZoom / targetZoom);
-      clampPan();
 
       targetZoom = newZoom;
       lastTouchDistance = distance;
@@ -158,24 +154,6 @@ svg.addEventListener("touchend", (e) => {
     isDragging = true;
   }
 });
-
-function clampPan() {
-  const bbox = content.getBBox();
-
-  const viewW = svg.viewBox.baseVal.width;
-  const viewH = svg.viewBox.baseVal.height;
-
-  const scaledW = bbox.width * targetZoom;
-  const scaledH = bbox.height * targetZoom;
-
-  const minX = viewW - scaledW;
-  const minY = viewH - scaledH;
-
-  console.log(viewW, scaledW, minX);
-
-  targetX = clamp(targetX, minX, 0);
-  targetY = clamp(targetY, minY, 0);
-}
 
 function loadTooltips() {
   const mapSelection = document.querySelectorAll(".map-tooltip");
