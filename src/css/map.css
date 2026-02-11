@@ -20,7 +20,7 @@
 #map-i {
   z-index: 999;
   position: relative;
-  /* scale: 0.7; */
+  scale: 0.2;
 }
 
 /* #map-contents {
@@ -28,8 +28,9 @@
   will-change: transform;
 } */
 
-#map-i polygon {
+.map-location polygon {
   cursor: pointer;
+  scale: 0.31;
   fill: transparent;
 }
 
