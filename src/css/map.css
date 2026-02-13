@@ -1,6 +1,7 @@
 #map-window {
   background: transparent;
-  background-color: #fbfbfb;
+  /* background-color: #fbfbfb; */
+  background-color: #c4c4c4;
   position: relative;
   width: 100vw;
   height: 100vh;
