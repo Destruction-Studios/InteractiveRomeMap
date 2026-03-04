@@ -7,6 +7,7 @@ import "./css/works-cited.css";
 
 import { mapReady } from "./js/map.js";
 import { initSidebar } from "./js/sidebar.js";
+import "./js/tour.js";
 import "./js/misc.js";
 
 console.log("Awaiting map...");

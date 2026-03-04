@@ -51,12 +51,19 @@ const SWAY_LERP = 0.6;
 let lastX = 0;
 let velX = 0;
 
+//Click
+let clickX = 0;
+let clickY = 0;
+
 const lerp = (a, b, t) => a + (b - a) * t;
 
 svg.addEventListener("mousedown", (e) => {
   isDragging = true;
   startX = e.clientX - currentX;
   startY = e.clientY - currentY;
+
+  clickX = e.clientX;
+  clickY = e.clientY;
 });
 
 document.addEventListener("mousemove", (e) => {
@@ -241,25 +248,19 @@ function loadMapLocations() {
         allMapPins.push({
           element: pin,
           zoom: loc.zoom || 3,
-          visible: true,
+          visible: false,
         });
       }
     });
 }
 
 function handlePinZoom() {
-  // console.log(currentZoom);
   for (const pin of allMapPins) {
-    if (pin.zoom != null)
-      targetZoom >= pin.zoom
-        ? !pin.visible &&
-          ((pin.element.style.opacity = "1"),
-          (pin.visible = true),
-          (pin.element.style.pointerEvents = ""))
-        : pin.visible &&
-          ((pin.element.style.opacity = "0"),
-          (pin.visible = false),
-          (pin.element.style.pointerEvents = "none"));
+    if (pin.visible) return;
+    pin.visible = true;
+    pin.element.style.opacity = "1";
+    pin.visible = true;
+    pin.element.style.pointerEvents = "";
   }
 }
 
@@ -268,7 +269,14 @@ function setupMapLocations() {
 
   mapLocations.forEach((mapLoc) => {
     const location = mapLoc.dataset.location;
-    mapLoc.addEventListener("mousedown", () => {
+    mapLoc.addEventListener("mouseup", (e) => {
+      const dx = Math.abs(e.clientX - clickX);
+      const dy = Math.abs(e.clientY - clickY);
+
+      if (dx > 20 || dy > 20) {
+        return;
+      }
+
       window.location.hash = `${location.toLowerCase()}`;
     });
   });

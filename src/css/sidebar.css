@@ -111,3 +111,9 @@
 .location-list a:hover::before {
   opacity: 1;
 } */
+
+.center-span {
+  display: block;
+  font-weight: bold;
+  text-align: center;
+}

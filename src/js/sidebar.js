@@ -1,3 +1,5 @@
+import { startTour } from "./tour";
+
 const sidebar = document.getElementById("sidebar");
 const resizer = document.getElementById("sidebar-resizer");
 const sidebarHeader = document.getElementById("sidebar-header");
@@ -63,6 +65,8 @@ function loadTabs() {
       for (const key in r) {
         const entry = r[key];
 
+        if (entry.pinOnly) return;
+
         const filePath = `/sidebar_profiles/${key}.html`;
 
         const htmlRes = await fetch(filePath);
@@ -108,7 +112,7 @@ function createLocListItem(prop) {
   return li;
 }
 
-function setTab(tab) {
+export function setTab(tab) {
   console.log(`Setting tab: ${tab}`);
 
   let data = sidebarTabs[tab];
@@ -124,6 +128,7 @@ function setTab(tab) {
   if (tab === "home") {
     const locList = document.getElementById("location-list");
     const pinList = document.getElementById("place-list");
+    const tourBtn = document.getElementById("tour-btn");
 
     allPages.forEach((page) => {
       if (page.hash[0] === "_" || page.hash === "home") {
@@ -134,6 +139,10 @@ function setTab(tab) {
     });
     allPins.forEach((pin) => {
       pinList.append(createLocListItem(pin));
+    });
+    tourBtn.addEventListener("mouseup", () => {
+      console.log("Request start tour");
+      startTour();
     });
   }
 }
