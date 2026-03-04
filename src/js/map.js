@@ -1,3 +1,5 @@
+import { getIsInTour } from "./tour";
+
 const svg = document.getElementById("map");
 const content = document.getElementById("map-contents");
 const tooltip = document.getElementById("tooltip");
@@ -219,6 +221,10 @@ function loadMapLocations() {
           "http://www.w3.org/2000/svg",
           "use",
         );
+        const glow = document.createElementNS(
+          "http://www.w3.org/2000/svg",
+          "circle",
+        );
         const pinWidth = 24 * PIN_SCALE;
         const pinHeight = 32 * PIN_SCALE;
 
@@ -238,20 +244,41 @@ function loadMapLocations() {
         pin.classList.add("map-location");
         pin.classList.add("map-tooltip");
 
+        glow.setAttribute("cx", 0);
+        glow.setAttribute("cy", pinHeight / 2 + PIVOT_RAISE / 2);
+        glow.setAttribute("r", pinWidth * 1);
+
+        glow.setAttribute("fill", "rgba(255, 255, 0, 1)");
+        glow.style.filter = "blur(1px)";
+        glow.style.transition = "opacity 0.25s ease";
+        glow.style.opacity = "0";
+
         if (loc.color === "blue") {
           pin.classList.add("pin-blue");
         }
 
+        group.append(glow);
         group.append(pin);
         content.append(group);
 
         allMapPins.push({
           element: pin,
+          glowElement: glow,
           zoom: loc.zoom || 3,
           visible: false,
+          glow: false,
         });
       }
     });
+}
+
+export function setPinGlow(location, enabled) {
+  const pin = allMapPins.find((p) => p.element.dataset.location === location);
+
+  if (!pin) return;
+
+  pin.glow = enabled;
+  pin.glowElement.style.opacity = enabled ? "1" : "0";
 }
 
 function handlePinZoom() {
@@ -274,6 +301,11 @@ function setupMapLocations() {
       const dy = Math.abs(e.clientY - clickY);
 
       if (dx > 20 || dy > 20) {
+        return;
+      }
+
+      if (getIsInTour()) {
+        console.log("Tour; no clicky");
         return;
       }
 
@@ -354,6 +386,12 @@ if (location.hostname === "localhost") {
 
     console.log(`"x": ${percentX.toFixed(2)}, "y": ${percentY.toFixed(2)}`);
   });
+}
+
+export function resetMap() {
+  targetZoom = 2.3;
+  targetX = 0;
+  targetY = 0;
 }
 
 export const mapReady = loadMap()

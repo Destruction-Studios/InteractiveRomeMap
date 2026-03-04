@@ -36,6 +36,7 @@
 }
 
 .map-pin {
+  position: relative;
   cursor: pointer;
   opacity: 0;
   color: #ff0000;
@@ -50,6 +51,15 @@
 
 .map-pin:hover {
   transform: translateY(-0.5px);
+}
+
+.glow::after {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  background: #000;
 }
 
 .pin-blue {

@@ -1,4 +1,4 @@
-import { startTour } from "./tour";
+import { getIsInTour, startTour } from "./tour";
 
 const sidebar = document.getElementById("sidebar");
 const resizer = document.getElementById("sidebar-resizer");
@@ -65,8 +65,6 @@ function loadTabs() {
       for (const key in r) {
         const entry = r[key];
 
-        if (entry.pinOnly) return;
-
         const filePath = `/sidebar_profiles/${key}.html`;
 
         const htmlRes = await fetch(filePath);
@@ -76,6 +74,8 @@ function loadTabs() {
           header: entry.header,
           contents: html,
         };
+
+        if (entry.pinOnly) return;
 
         allPages.push({
           name: entry.header,
@@ -90,7 +90,7 @@ function onPageHashChange() {
 
   console.log(`Hash changed: ${hash}`);
 
-  if (!hash) {
+  if (!hash || !sidebarTabs[hash]) {
     setTab(DEFAULT_TAB);
     return;
   }
@@ -160,11 +160,23 @@ function animateStuff() {
 
   if (showBack != isShowingButton) {
     isShowingButton = showBack;
+    sidebarBackButton.innerHTML = getIsInTour() ? "Next" : "Home";
     sidebarBackButton.style.opacity = showBack ? "1" : "0";
     sidebarBackButton.style.pointerEvents = showBack ? "auto" : "none";
   }
 
   requestAnimationFrame(animateStuff);
+}
+
+export function waitForNextButton() {
+  return new Promise((resolve) => {
+    const handler = () => {
+      sidebarBackButton.removeEventListener("click", handler);
+      resolve();
+    };
+
+    sidebarBackButton.addEventListener("click", handler, { once: true });
+  });
 }
 
 export async function initSidebar() {
