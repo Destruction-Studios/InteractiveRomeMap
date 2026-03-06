@@ -1,3 +1,5 @@
+import { getIsInTour, startTour } from "./tour";
+
 const sidebar = document.getElementById("sidebar");
 const resizer = document.getElementById("sidebar-resizer");
 const sidebarHeader = document.getElementById("sidebar-header");
@@ -73,6 +75,8 @@ function loadTabs() {
           contents: html,
         };
 
+        if (entry.pinOnly) continue;
+
         allPages.push({
           name: entry.header,
           hash: key,
@@ -86,7 +90,7 @@ function onPageHashChange() {
 
   console.log(`Hash changed: ${hash}`);
 
-  if (!hash) {
+  if (!hash || !sidebarTabs[hash]) {
     setTab(DEFAULT_TAB);
     return;
   }
@@ -108,7 +112,7 @@ function createLocListItem(prop) {
   return li;
 }
 
-function setTab(tab) {
+export function setTab(tab) {
   console.log(`Setting tab: ${tab}`);
 
   let data = sidebarTabs[tab];
@@ -124,17 +128,29 @@ function setTab(tab) {
   if (tab === "home") {
     const locList = document.getElementById("location-list");
     const pinList = document.getElementById("place-list");
+    const tourBtn = document.getElementById("tour-btn");
 
     allPages.forEach((page) => {
-      if (page.hash[0] === "_" || page.hash === "home") {
+      if (
+        page.hash[0] === "_" ||
+        page.hash === "home" ||
+        page.hash === "tour-end"
+      ) {
         return;
       }
+
+      console.log(page);
 
       locList.append(createLocListItem(page));
     });
     allPins.forEach((pin) => {
       pinList.append(createLocListItem(pin));
     });
+    // tourBtn.addEventListener("mouseup", () => {
+    //   console.log("Request start tour");
+    //   startTour();
+    // });
+    tourBtn.onclick = startTour;
   }
 }
 
@@ -151,11 +167,23 @@ function animateStuff() {
 
   if (showBack != isShowingButton) {
     isShowingButton = showBack;
+    sidebarBackButton.innerHTML = getIsInTour() ? "Next" : "Home";
     sidebarBackButton.style.opacity = showBack ? "1" : "0";
     sidebarBackButton.style.pointerEvents = showBack ? "auto" : "none";
   }
 
   requestAnimationFrame(animateStuff);
+}
+
+export function waitForNextButton() {
+  return new Promise((resolve) => {
+    const handler = () => {
+      sidebarBackButton.removeEventListener("click", handler);
+      resolve();
+    };
+
+    sidebarBackButton.addEventListener("click", handler, { once: true });
+  });
 }
 
 export async function initSidebar() {
@@ -165,7 +193,9 @@ export async function initSidebar() {
   onPageHashChange();
 
   sidebarBackButton.addEventListener("mousedown", () => {
-    window.location.hash = DEFAULT_TAB;
+    if (!getIsInTour()) {
+      window.location.hash = DEFAULT_TAB;
+    }
   });
 
   window.addEventListener("hashchange", onPageHashChange);

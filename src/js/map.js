@@ -1,3 +1,5 @@
+import { getIsInTour } from "./tour";
+
 const svg = document.getElementById("map");
 const content = document.getElementById("map-contents");
 const tooltip = document.getElementById("tooltip");
@@ -25,7 +27,7 @@ let targetY = 0;
 //Zooming
 let currentZoom = 1;
 let targetZoom = 2.8;
-const MIN_ZOOM = 2.2;
+const MIN_ZOOM = 1.6;
 const MAX_ZOOM = 7.5;
 const ZOOM_SPEED = 0.001;
 //Zooming->Touch
@@ -51,12 +53,19 @@ const SWAY_LERP = 0.6;
 let lastX = 0;
 let velX = 0;
 
+//Click
+let clickX = 0;
+let clickY = 0;
+
 const lerp = (a, b, t) => a + (b - a) * t;
 
 svg.addEventListener("mousedown", (e) => {
   isDragging = true;
   startX = e.clientX - currentX;
   startY = e.clientY - currentY;
+
+  clickX = e.clientX;
+  clickY = e.clientY;
 });
 
 document.addEventListener("mousemove", (e) => {
@@ -212,6 +221,10 @@ function loadMapLocations() {
           "http://www.w3.org/2000/svg",
           "use",
         );
+        const glow = document.createElementNS(
+          "http://www.w3.org/2000/svg",
+          "circle",
+        );
         const pinWidth = 24 * PIN_SCALE;
         const pinHeight = 32 * PIN_SCALE;
 
@@ -231,35 +244,63 @@ function loadMapLocations() {
         pin.classList.add("map-location");
         pin.classList.add("map-tooltip");
 
+        glow.setAttribute("cx", 0);
+        glow.setAttribute("cy", pinHeight / 2 + PIVOT_RAISE / 2);
+        glow.setAttribute("r", pinWidth * 1);
+
+        glow.setAttribute("fill", "rgba(255, 255, 0, 1)");
+        glow.style.filter = "blur(1px)";
+        glow.style.transition = "opacity 0.25s ease";
+        glow.style.opacity = "0";
+
         if (loc.color === "blue") {
           pin.classList.add("pin-blue");
         }
 
+        group.append(glow);
         group.append(pin);
         content.append(group);
 
         allMapPins.push({
           element: pin,
+          glowElement: glow,
           zoom: loc.zoom || 3,
-          visible: true,
+          visible: false,
+          glow: false,
         });
       }
     });
 }
 
+let currentGlow = null;
+
+export function setPinGlow(location, enabled) {
+  const pin = allMapPins.find((p) => p.element.dataset.location === location);
+
+  if (!pin) return;
+
+  pin.glow = enabled;
+  pin.glowElement.style.opacity = enabled ? "1" : "0";
+}
+
+export function setOnlyPinGlow(location) {
+  if (currentGlow) {
+    setPinGlow(currentGlow, false);
+  }
+
+  currentGlow = location;
+  if (location) {
+    setPinGlow(location, true);
+  }
+}
+
 function handlePinZoom() {
-  // console.log(currentZoom);
   for (const pin of allMapPins) {
-    if (pin.zoom != null)
-      targetZoom >= pin.zoom
-        ? !pin.visible &&
-          ((pin.element.style.opacity = "1"),
-          (pin.visible = true),
-          (pin.element.style.pointerEvents = ""))
-        : pin.visible &&
-          ((pin.element.style.opacity = "0"),
-          (pin.visible = false),
-          (pin.element.style.pointerEvents = "none"));
+    if (pin.visible) return;
+    pin.visible = true;
+    pin.element.style.opacity = "1";
+    pin.visible = true;
+    pin.element.style.pointerEvents = "";
   }
 }
 
@@ -268,7 +309,19 @@ function setupMapLocations() {
 
   mapLocations.forEach((mapLoc) => {
     const location = mapLoc.dataset.location;
-    mapLoc.addEventListener("mousedown", () => {
+    mapLoc.addEventListener("mouseup", (e) => {
+      const dx = Math.abs(e.clientX - clickX);
+      const dy = Math.abs(e.clientY - clickY);
+
+      if (dx > 20 || dy > 20) {
+        return;
+      }
+
+      if (getIsInTour()) {
+        console.log("Tour; no clicky");
+        return;
+      }
+
       window.location.hash = `${location.toLowerCase()}`;
     });
   });
@@ -346,6 +399,12 @@ if (location.hostname === "localhost") {
 
     console.log(`"x": ${percentX.toFixed(2)}, "y": ${percentY.toFixed(2)}`);
   });
+}
+
+export function resetMap() {
+  targetZoom = 2.3;
+  targetX = 0;
+  targetY = 0;
 }
 
 export const mapReady = loadMap()
