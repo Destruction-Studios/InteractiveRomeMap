@@ -272,6 +272,8 @@ function loadMapLocations() {
     });
 }
 
+let currentGlow = null;
+
 export function setPinGlow(location, enabled) {
   const pin = allMapPins.find((p) => p.element.dataset.location === location);
 
@@ -279,6 +281,17 @@ export function setPinGlow(location, enabled) {
 
   pin.glow = enabled;
   pin.glowElement.style.opacity = enabled ? "1" : "0";
+}
+
+export function setOnlyPinGlow(location) {
+  if (currentGlow) {
+    setPinGlow(currentGlow, false);
+  }
+
+  currentGlow = location;
+  if (location) {
+    setPinGlow(location, true);
+  }
 }
 
 function handlePinZoom() {

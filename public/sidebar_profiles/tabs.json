@@ -1,21 +1,43 @@
 {
+    "tour-end": {
+        "header": "End of Tour!"
+    },
     "_error": {
         "header": "Error"
     },
     "home": {
         "header": "Home"
     },
-    "sicily": {
-        "header": "Sicily"
-    },
     "rome": {
-        "header": "Rome"
-    },
-    "apulia": {
-        "header": "Apulia"
+        "header": "Rome",
+        "pinOnly": true
     },
     "antium": {
         "header": "Antium",
+        "pinOnly": true
+    },
+    "germania": {
+        "header": "Germania",
+        "pinOnly": true
+    },
+    "capraea": {
+        "header": "Capraea",
+        "pinOnly": true
+    },
+    "palatine-hill": {
+        "header": "Palatine Hill",
+        "pinOnly": true
+    },
+    "temple": {
+        "header": "Temple of Castor and Pollux",
+        "pinOnly": true
+    },
+    "t-jew": {
+        "header": "Temple of Jerusalem",
+        "pinOnly": true
+    },
+    "p-hill-a": {
+        "header": "Palatine Hill II",
         "pinOnly": true
     }
 }

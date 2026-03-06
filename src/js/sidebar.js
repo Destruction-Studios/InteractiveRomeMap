@@ -75,7 +75,7 @@ function loadTabs() {
           contents: html,
         };
 
-        if (entry.pinOnly) return;
+        if (entry.pinOnly) continue;
 
         allPages.push({
           name: entry.header,
@@ -131,19 +131,26 @@ export function setTab(tab) {
     const tourBtn = document.getElementById("tour-btn");
 
     allPages.forEach((page) => {
-      if (page.hash[0] === "_" || page.hash === "home") {
+      if (
+        page.hash[0] === "_" ||
+        page.hash === "home" ||
+        page.hash === "tour-end"
+      ) {
         return;
       }
+
+      console.log(page);
 
       locList.append(createLocListItem(page));
     });
     allPins.forEach((pin) => {
       pinList.append(createLocListItem(pin));
     });
-    tourBtn.addEventListener("mouseup", () => {
-      console.log("Request start tour");
-      startTour();
-    });
+    // tourBtn.addEventListener("mouseup", () => {
+    //   console.log("Request start tour");
+    //   startTour();
+    // });
+    tourBtn.onclick = startTour;
   }
 }
 
@@ -186,7 +193,9 @@ export async function initSidebar() {
   onPageHashChange();
 
   sidebarBackButton.addEventListener("mousedown", () => {
-    window.location.hash = DEFAULT_TAB;
+    if (!getIsInTour()) {
+      window.location.hash = DEFAULT_TAB;
+    }
   });
 
   window.addEventListener("hashchange", onPageHashChange);

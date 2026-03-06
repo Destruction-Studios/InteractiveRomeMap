@@ -1,27 +1,40 @@
-import { resetMap, setPinGlow } from "./map";
-import { setTab, waitForNextButton } from "./sidebar";
+import { resetMap, setOnlyPinGlow } from "./map";
+import { waitForNextButton } from "./sidebar";
 
 let isInTour = false;
 
-const tourLocations = {};
-
 function changeTab(tab) {
-  //   window.location.hash = tab;
+  window.location.hash = tab;
   resetMap();
-  setTab(tab);
 }
 
 export async function startTour() {
   if (isInTour) return;
   isInTour = true;
+
   console.log("Starting tour");
-  changeTab("antium");
-  setPinGlow("antium", true);
 
+  const stops = [
+    "antium",
+    "germania",
+    "capraea",
+    "rome",
+    "palatine-hill",
+    "temple",
+    "t-jew",
+  ];
+
+  for (const stop of stops) {
+    changeTab(stop);
+    setOnlyPinGlow(stop);
+
+    await waitForNextButton();
+  }
+  changeTab("p-hill-a");
+  setOnlyPinGlow("palatine-hill");
   await waitForNextButton();
-
-  setPinGlow("antium", false);
-  changeTab("two");
+  setOnlyPinGlow();
+  changeTab("tour-end");
 }
 
 export function getIsInTour() {
