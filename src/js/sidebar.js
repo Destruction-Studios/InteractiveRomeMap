@@ -91,6 +91,7 @@ function onPageHashChange() {
   console.log(`Hash changed: ${hash}`);
 
   if (!hash || !sidebarTabs[hash]) {
+    window.location.hash = "home";
     setTab(DEFAULT_TAB);
     return;
   }
