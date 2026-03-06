@@ -4,59 +4,6 @@
 
 
 <g id="map-id">
-  <a class="map-location map-tooltip" data-location="macedon">
-    <polygon class="image-mapper-shape" points="819.188 270.171 832.82 250.342 812.991 240.427 793.162 254.06"></polygon>
-  </a>
-
-  <a class="map-location map-tooltip" data-location="adriatic-sea">
-    <polygon class="image-mapper-shape" points="571.325 127.65 594.872 107.821 747.308 224.316 718.803 263.974"></polygon>
-  </a>
-
-  <a class="map-location map-tooltip" data-location="ionian-sea">
-    <polygon class="image-mapper-shape" points="639.487 534.145 765.897 583.718 768.376 534.145 798.12 365.598 746.068 271.41 659.316 353.205"></polygon>
-  </a>
-
-  <a class="map-location map-tooltip" data-location="aegean-sea">
-    <polygon class="image-mapper-shape" points="837.778 281.325 887.35 330.897 956.752 358.162 923.291 278.846 903.462 235.47 857.607 239.188"></polygon>
-  </a>
-
-  <a class="map-location map-tooltip" data-location="mediterranian-sea">
-    <polygon class="image-mapper-shape" points="190.855 340.812 256.538 286.282 299.915 216.88 349.487 200.769 421.368 167.308 494.487 137.564 659.316 309.829 630.812 325.94 500.684 355.684 454.829 365.598 193.333 374.273 123.932 385.427 100.385 340.812"></polygon>
-  </a>
-
-  <a class="map-location map-tooltip" data-location="sicily">
-    <polygon class="image-mapper-shape" points="638.248 389.145 568.846 349.487 598.59 339.573 648.162 337.094"></polygon>
-  </a>
-
-  <a class="map-location map-tooltip" data-location="peloponnese">
-    <polygon class="image-mapper-shape" points="809.273 379.231 856.367 394.103 856.367 351.966 806.795 329.658 794.402 351.966"></polygon>
-  </a>
-
-  <a class="map-location map-tooltip" data-location="black-sea">
-    <polygon class="image-mapper-shape" points="1015 213.162 1089.36 171.026 1146.37 166.068 1235.6 171.026 1290.13 133.846 1220.73 86.7521 1148.85 54.5299 1101.75 84.2735 1054.66 69.4017 1062.09 42.1368 1002.61 32.2222 948.077 175.983"></polygon>
-  </a>
-
-  <a class="map-location map-tooltip" data-location="sea-of-marmara">
-    <polygon class="image-mapper-shape" points="938.162 250.342 990.214 240.427 1000.13 223.077 943.12 223.077"></polygon>
-  </a>
-
-  <a class="map-location map-tooltip" data-location="north-africa">
-    <polygon class="image-mapper-shape" points="75.5983 354.444 1.23932 416.41 3.71795 728.718 464.744 728.718 454.829 535.385 435 448.632 449.872 384.188"></polygon>
-  </a>
-
-  <a class="map-location map-tooltip" data-location="asia-minor">
-    <polygon class="image-mapper-shape" points="935.684 263.974 950.556 283.803 950.556 303.632 972.863 348.248 1012.52 360.641 1022.44 373.034 1044.74 370.556 1042.27 343.291 1106.71 355.684 1111.67 368.077 1148.85 338.333 1183.55 323.462 1302.52 291.239 1300.04 145 1243.03 182.179 1099.27 179.701"></polygon>
-  </a>
-
-  <a class="map-location map-tooltip" data-location="corsica">
-  <polygon class="image-mapper-shape" points="489.53 231.752 501.923 209.444 496.966 182.179 477.137 199.53"></polygon>
-</a>
-
-<a class="map-location map-tooltip" data-location="sardinia">
-  <polygon class="image-mapper-shape" points="472.179 308.59 499.444 296.197 499.444 259.017 494.487 231.752 464.744 244.145"></polygon>
-</a>
-<a class="map-location map-tooltip" data-location="italia">
-  <polygon class="image-mapper-shape" points="458.547 145 500.684 127.65 525.47 162.35 604.786 249.103 664.273 301.154 654.359 338.333 661.795 353.205 694.017 313.547 676.667 288.761 686.581 261.496 718.803 283.803 728.718 271.41 661.795 224.316 666.752 211.923 641.966 211.923 577.521 120.214 580 92.9487 599.829 97.906 619.658 112.778 641.966 97.906 634.53 78.0769 577.521 55.7692 537.863 55.7692 498.205 78.0769 463.504 75.5983 443.675 102.863"></polygon>
-</a>
+  
 
 </g>
